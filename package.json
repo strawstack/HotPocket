@@ -1,10 +1,9 @@
 {
   "name": "6-hotpocket",
-  "module": "main.js",
+  "module": "server.js",
   "type": "module",
   "scripts": {
-    "build": "bun build ./index.js --outdir ./out --watch",
-    "dev": "bun run main.js"
+    "dev": "bun run server.js"
   },
   "devDependencies": {
     "@types/bun": "latest"

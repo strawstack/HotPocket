@@ -1,15 +1,7 @@
-# 6-hotpocket
+# HotPocket
 
-To install dependencies:
+A node js project that automatically builds the `src` folder on change, and auto-refreshes the browser.
 
-```bash
-bun install
-```
+## Run
 
-To run:
-
-```bash
-bun run index.ts
-```
-
-This project was created using `bun init` in bun v1.1.33. [Bun](https://bun.sh) is a fast all-in-one JavaScript runtime.
+`bun run dev`
