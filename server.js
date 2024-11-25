@@ -2,22 +2,21 @@ import { watch } from "fs";
 
 let server = null;
 let client = null;
-let starting = false;
+let restarting = false;
 
 async function restartServer() {
-    starting = true;
+    restarting = true;
 
-    if (server) {
-        server.stop();
-        if (client) client.close();
-        server = null;
-        client = null;
-    }
+    if (server) server.stop();
+    if (client) client.close();
+    server = null;
+    client = null;
 
-    await Bun.build({
-        entrypoints: ['./src/script.js'],
-        outdir: './build',
-    });
+    // Uncomment to bundle a 'src' folder into a 'build' directory 
+    // await Bun.build({
+    //     entrypoints: ['./src/script.js'],
+    //     outdir: './build',
+    // });
 
     server = Bun.serve({
         port: 3000,
@@ -29,14 +28,10 @@ async function restartServer() {
             }
             
             if (url.pathname === "/") {
-                const filePath = "./build/index.html";
-                const file = Bun.file(filePath);
-                return new Response(file);
+                return new Response(Bun.file('./index.html'));
             }
 
-            const filePath = `./build${url.pathname}`;
-            const file = Bun.file(filePath);
-            return new Response(file);
+            return new Response(Bun.file(`./${url.pathname}`));
         },
         websocket: {
             async open(ws) {
@@ -46,15 +41,17 @@ async function restartServer() {
     });
     
     console.log(`Listening on localhost:${server.port}`);
-    starting = false;
+    restarting = false;
 }
 
-await restartServer();
-
+// Restart on file change
 watch(
-    './src',
+    '.',
     { recursive: true },
     async (event, filename) => {
-        if (!starting) await restartServer();
+        if (!restarting) await restartServer();
     },
 );
+
+// Initial server start
+await restartServer();

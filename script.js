@@ -1,7 +1,7 @@
 (() => {
 
     function main() {
-        console.log("here");
+        console.log("hello world");
     }
 
     main();
