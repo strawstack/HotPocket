@@ -27,4 +27,4 @@ Uncomment the following lines inside `server.js` to bundle a collection of files
 
 ## Demo Video
 
-![](./hotpocket_example.gif)
+https://youtu.be/gCdwSikDtXA
